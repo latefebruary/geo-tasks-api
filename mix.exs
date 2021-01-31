@@ -25,7 +25,8 @@ defmodule Mini.MixProject do
       {:poison, "~> 4.0"},
       {:plug, "~> 1.11"},
       {:cowboy, "~> 2.8"},
-      {:plug_cowboy, "~> 2.4"}
+      {:plug_cowboy, "~> 2.4"},
+      {:postgrex, "~> 0.15.8"}
     ]
   end
 end

@@ -7,8 +7,7 @@ defmodule Mini.Application do
 
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: Mini.Worker.start_link(arg)
-      # {Mini.Worker, arg}
+      Mini.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
