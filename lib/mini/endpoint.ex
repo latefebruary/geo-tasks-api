@@ -26,5 +26,4 @@ defmodule Mini.Endpoint do
 
   def start_link(_opts),
     do: Plug.Cowboy.http(__MODULE__, [])
-
 end

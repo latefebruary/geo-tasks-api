@@ -1,6 +1,6 @@
 defmodule Mini.Router do
   use Plug.Router
-  alias Mini.Tracker.Controllers
+  alias Mini.Tracker.Controllers.TaskController
 
   plug(:match)
   plug(:dispatch)
@@ -19,21 +19,24 @@ defmodule Mini.Router do
   end
 
   get "/tasks" do
-    body = Controllers.TaskController.index(conn)
+    body = TaskController.index(conn.params)
+
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, body)
   end
 
   post "/tasks" do
-    body = Controllers.TaskController.create(conn)
+    body = TaskController.create(conn.params)
+
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, body)
   end
 
   patch "/tasks" do
-    body = Controllers.TaskController.update(conn)
+    body = TaskController.update(conn.params)
+
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, body)

@@ -26,7 +26,10 @@ defmodule Mini.MixProject do
       {:plug, "~> 1.11"},
       {:cowboy, "~> 2.8"},
       {:plug_cowboy, "~> 2.4"},
-      {:postgrex, "~> 0.15.8"}
+      {:ecto_sql, "~> 3.0"},
+      {:postgrex, "~> 0.15.8"},
+      {:geo_postgis, "~> 3.1"},
+      {:geo, "~> 3.0"}
     ]
   end
 end

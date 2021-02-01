@@ -1,21 +1,25 @@
 # Mini
 
-**TODO: Add description**
-
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `mini` to your list of dependencies in `mix.exs`:
+Run these commands in order to build application and create database
 
 ```elixir
-def deps do
-  [
-    {:mini, "~> 0.1.0"}
-  ]
-end
+mix do deps.get, deps.compile, compile
+
+mix ecto.create
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/mini](https://hexdocs.pm/mini).
+Make sure PostGIS extension to the database is installed.
+```
+psql mini_repo -c 'CREATE EXTENSION postgis;'
+```
+
+```elixir
+mix ecto.migrate
+
+mix run --no-halt
+```
+
+
 

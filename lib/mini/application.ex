@@ -7,7 +7,8 @@ defmodule Mini.Application do
 
   def start(_type, _args) do
     children = [
-      Mini.Endpoint
+      Mini.Endpoint,
+      {Mini.Repo, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
