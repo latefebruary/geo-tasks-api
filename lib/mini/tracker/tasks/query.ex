@@ -8,10 +8,11 @@ defmodule Mini.Tracker.Tasks.Query do
 
   @spec list_tasks(tuple()) :: [Task.t] | []
   def list_tasks({lon, lat}) do
+    Repo.all(Task)
   end
 
   @spec get!(Task.id) :: Task.t | no_return
-  def get(id) do
+  def get!(id) do
     Task
     |> where(id: ^id)
     |> Repo.one!()
@@ -24,7 +25,7 @@ defmodule Mini.Tracker.Tasks.Query do
     |> Repo.insert()
   end
 
-  @spec update(Keyword.t) :: {:ok, Task.t} | {:error, Ecto.Changeset.t}
+  @spec update(Task.t, Keyword.t) :: {:ok, Task.t} | {:error, Ecto.Changeset.t}
   def update(task, attrs) do
     task
     |> Task.changeset(attrs)

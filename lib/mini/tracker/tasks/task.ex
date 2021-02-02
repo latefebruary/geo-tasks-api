@@ -2,7 +2,7 @@ defmodule Mini.Tracker.Tasks.Task do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "task" do
+  schema "tasks" do
     field(:description, :string)
     field(:start_point, Geo.PostGIS.Geometry)
     field(:end_point, Geo.PostGIS.Geometry)
@@ -13,33 +13,38 @@ defmodule Mini.Tracker.Tasks.Task do
     new
     assigned
     done
+  )
+  @required_fields ~w(
+    description
+    start_point
+    end_point
+    status
   )a
+  @srid 4326
 
   @spec changeset(Task.t, map) :: Ecto.Changeset.t
   def changeset(task, params \\ %{}) do
+    params = convert_geo_params(params)
+
     task
-    |> cast(params, [:description, :start_point, :end_point, :status])
+    |> cast(params, @required_fields)
     |> prepare_changes(&set_status/1)
-    |> prepare_changes(&set_coordinates/1)
     |> validate_inclusion(:status, @statuses)
-    |> validate_required([:description, :start_point, :end_point, :status])
+    |> validate_required(@required_fields)
   end
 
-  def set_status(changeset) do
+  defp set_status(changeset) do
     unless get_change(changeset, :status) do
       changeset = %{changeset | status: "new"}
     end
     changeset
   end
 
-  def set_coordinates(changeset) do
-    if start_point = get_change(changeset, :start_point) do
-      start_point = %Geo.Point{ coordinates: List.to_tuple(start_point), srid: 4326}
-      end_point = %Geo.Point{ coordinates: List.to_tuple(end_point), srid: 4326}
+  defp convert_geo_params(%{"start_point" => start_point, "end_point" => end_point} = params) do
+    %{params | "start_point" => points_to_geo_points(start_point), "end_point" => points_to_geo_points(end_point)}
+  end
 
-      changeset = %{changeset | start_point: start_point}
-      changeset = %{changeset | end_point: end_point}
-    end
-    changeset
+  def points_to_geo_points(point) do
+    %Geo.Point{ coordinates: List.to_tuple(point), srid: @srid}
   end
 end

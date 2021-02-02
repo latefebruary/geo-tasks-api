@@ -31,7 +31,7 @@ defmodule Mini.Router do
 
     conn
     |> put_resp_content_type("application/json")
-    |> send_resp(200, body)
+    |> send_resp(201, body)
   end
 
   patch "/tasks" do

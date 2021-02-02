@@ -6,13 +6,13 @@ defmodule Mini.Tracker.Controllers.TaskController do
   alias Mini.Tracker.Tasks.{Query, Task}
 
   def index(%{"lat" => lat, "lon" => lon}) do
-    Query.list_tasks(lat: lat, lon: lon)
+    Query.list_tasks({lon, lat})
     |> Poison.encode!()
   end
 
   def create(%{"task" => task_attrs}) do
     {:ok, item} = Query.create(task_attrs)
-    Poison.encode!(item)
+    Poison.encode!("Success")
   end
 
   def update(%{"task" => %{"id" => id} = task_attrs}) do
