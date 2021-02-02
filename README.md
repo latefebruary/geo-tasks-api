@@ -21,5 +21,7 @@ mix ecto.migrate
 mix run --no-halt
 ```
 
+## Testing
 
+Run tests with `mix test` command
 

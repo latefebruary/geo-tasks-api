@@ -9,8 +9,8 @@ defmodule Mini.Tracker.Tasks.Task do
     field(:status, :string)
   end
 
+  @initial_status ["new"]
   @statuses ~w(
-    new
     assigned
     done
   )
@@ -29,8 +29,16 @@ defmodule Mini.Tracker.Tasks.Task do
     task
     |> cast(params, @required_fields)
     |> prepare_changes(&set_status/1)
-    |> validate_inclusion(:status, @statuses)
+    |> validate_inclusion(:status, @initial_status)
     |> validate_required(@required_fields)
+  end
+
+  @spec update_changeset(Task.t(), map) :: Ecto.Changeset.t()
+  def update_changeset(task, params \\ %{}) do
+    task
+    |> cast(params, [:status])
+    |> validate_inclusion(:status, @statuses)
+    |> validate_required([:status])
   end
 
   defp set_status(changeset) do

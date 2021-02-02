@@ -40,7 +40,7 @@ defmodule Mini.Tracker.Tasks.Query do
   @spec update(Task.t(), Keyword.t()) :: {:ok, Task.t()} | {:error, Ecto.Changeset.t()}
   def update(task, attrs) do
     task
-    |> Task.changeset(attrs)
+    |> Task.update_changeset(attrs)
     |> Repo.update()
   end
 end

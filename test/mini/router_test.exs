@@ -14,13 +14,12 @@ defmodule Mini.RouterTest do
   @opts Router.init([])
 
   test "returns tasks nearby" do
-    task =
-      Repo.insert!(%Task{
-        description: @description,
-        start_point: %Geo.Point{coordinates: List.to_tuple(@start_point), srid: @srid},
-        end_point: %Geo.Point{coordinates: List.to_tuple(@end_point), srid: @srid},
-        status: "new"
-      })
+    Repo.insert!(%Task{
+      description: @description,
+      start_point: %Geo.Point{coordinates: List.to_tuple(@start_point), srid: @srid},
+      end_point: %Geo.Point{coordinates: List.to_tuple(@end_point), srid: @srid},
+      status: "new"
+    })
 
     conn =
       conn(:get, "/tasks", %{"point" => @driver_point})
