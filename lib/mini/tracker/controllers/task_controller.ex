@@ -16,8 +16,8 @@ defmodule Mini.Tracker.Controllers.TaskController do
   end
 
   def update(%{"task" => %{"id" => id} = task_attrs}) do
-    task = Task.get!(id)
+    task = Query.get!(id)
     {:ok, item} = Query.update(task, task_attrs)
-    Poison.encode!(item)
+    Poison.encode!("Success")
   end
 end

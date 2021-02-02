@@ -43,6 +43,7 @@ defmodule Mini.Tracker.Tasks.Task do
   defp convert_geo_params(%{"start_point" => start_point, "end_point" => end_point} = params) do
     %{params | "start_point" => points_to_geo_points(start_point), "end_point" => points_to_geo_points(end_point)}
   end
+  defp convert_geo_params(params), do: params
 
   def points_to_geo_points(point) do
     %Geo.Point{ coordinates: List.to_tuple(point), srid: @srid}
