@@ -28,7 +28,6 @@ defmodule Mini.Tracker.Tasks.Task do
 
     task
     |> cast(params, @required_fields)
-    |> prepare_changes(&set_status/1)
     |> validate_inclusion(:status, @initial_status)
     |> validate_required(@required_fields)
   end
@@ -39,14 +38,6 @@ defmodule Mini.Tracker.Tasks.Task do
     |> cast(params, [:status])
     |> validate_inclusion(:status, @statuses)
     |> validate_required([:status])
-  end
-
-  defp set_status(changeset) do
-    unless get_change(changeset, :status) do
-      changeset = %{changeset | status: "new"}
-    end
-
-    changeset
   end
 
   defp convert_geo_params(%{"start_point" => start_point, "end_point" => end_point} = params) do

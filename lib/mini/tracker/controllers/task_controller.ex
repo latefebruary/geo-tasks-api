@@ -3,7 +3,7 @@ defmodule Mini.Tracker.Controllers.TaskController do
   Documentation for Mini.Tracker.Controllers.TaskController
   """
 
-  alias Mini.Tracker.Tasks.{Query, Task}
+  alias Mini.Tracker.Tasks.Query
 
   def index(%{"point" => point}) do
     point
@@ -20,13 +20,13 @@ defmodule Mini.Tracker.Controllers.TaskController do
   end
 
   def create(%{"task" => task_attrs}) do
-    {:ok, item} = Query.create(task_attrs)
+    {:ok, _} = Query.create(task_attrs)
     Poison.encode!("Success")
   end
 
   def update(%{"task" => %{"id" => id} = task_attrs}) do
     task = Query.get!(id)
-    {:ok, item} = Query.update(task, task_attrs)
+    {:ok, _} = Query.update(task, task_attrs)
     Poison.encode!("Success")
   end
 end
