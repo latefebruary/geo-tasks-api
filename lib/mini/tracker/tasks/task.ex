@@ -22,7 +22,7 @@ defmodule Mini.Tracker.Tasks.Task do
   )a
   @srid 4326
 
-  @spec changeset(Task.t, map) :: Ecto.Changeset.t
+  @spec changeset(Task.t(), map) :: Ecto.Changeset.t()
   def changeset(task, params \\ %{}) do
     params = convert_geo_params(params)
 
@@ -37,15 +37,22 @@ defmodule Mini.Tracker.Tasks.Task do
     unless get_change(changeset, :status) do
       changeset = %{changeset | status: "new"}
     end
+
     changeset
   end
 
   defp convert_geo_params(%{"start_point" => start_point, "end_point" => end_point} = params) do
-    %{params | "start_point" => points_to_geo_points(start_point), "end_point" => points_to_geo_points(end_point)}
+    %{
+      params
+      | "start_point" => points_to_geo_points(start_point),
+        "end_point" => points_to_geo_points(end_point)
+    }
   end
+
   defp convert_geo_params(params), do: params
 
+  @spec points_to_geo_points(list()) :: Geo.Point.t()
   def points_to_geo_points(point) do
-    %Geo.Point{ coordinates: List.to_tuple(point), srid: @srid}
+    %Geo.Point{coordinates: List.to_tuple(point), srid: @srid}
   end
 end

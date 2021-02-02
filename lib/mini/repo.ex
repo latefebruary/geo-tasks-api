@@ -3,5 +3,9 @@ defmodule Mini.Repo do
     otp_app: :mini,
     adapter: Ecto.Adapters.Postgres
 
-  Postgrex.Types.define(Mini.PostgresTypes, [Geo.PostGIS.Extension] ++ Ecto.Adapters.Postgres.extensions(), [])
+  Postgrex.Types.define(
+    Mini.PostgresTypes,
+    [Geo.PostGIS.Extension] ++ Ecto.Adapters.Postgres.extensions(),
+    []
+  )
 end
