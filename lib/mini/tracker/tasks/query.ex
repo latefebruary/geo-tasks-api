@@ -23,11 +23,11 @@ defmodule Mini.Tracker.Tasks.Query do
     Repo.all(q)
   end
 
-  @spec get!(Task.id()) :: Task.t() | no_return
-  def get!(id) do
+  @spec get(Task.id()) :: Task.t() | no_return
+  def get(id) do
     Task
     |> where(id: ^id)
-    |> Repo.one!()
+    |> Repo.one()
   end
 
   @spec create(Keyword.t()) :: {:ok, Task.t()} | {:error, Ecto.Changeset.t()}

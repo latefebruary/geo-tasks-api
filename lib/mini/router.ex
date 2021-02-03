@@ -19,26 +19,26 @@ defmodule Mini.Router do
   end
 
   get "/tasks" do
-    body = TaskController.index(conn.params)
+    {status, body} = TaskController.index(conn.params)
 
     conn
     |> put_resp_content_type("application/json")
-    |> send_resp(200, body)
+    |> send_resp(status, body)
   end
 
   post "/tasks" do
-    body = TaskController.create(conn.params)
+    {status, body} = TaskController.create(conn.params)
 
     conn
     |> put_resp_content_type("application/json")
-    |> send_resp(201, body)
+    |> send_resp(status, body)
   end
 
   patch "/tasks" do
-    body = TaskController.update(conn.params)
+    {status, body} = TaskController.update(conn.params)
 
     conn
     |> put_resp_content_type("application/json")
-    |> send_resp(201, body)
+    |> send_resp(status, body)
   end
 end
